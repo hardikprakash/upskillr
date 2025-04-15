@@ -1,2 +1,6 @@
 .venv/
 data/
+timeline/
+.env
+*.pyc
+app/resume_parser/__pycache__

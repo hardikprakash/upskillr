@@ -6,6 +6,7 @@ from pathlib import Path
 
 
 def clean_text(raw_text: str) -> str:
+    
     headings = [
         "Education",
         "Work Experience",
@@ -26,7 +27,8 @@ def clean_text(raw_text: str) -> str:
 
     # Remove invisible Unicode chars (zero-width, non-breaking spaces, etc.)
     text = re.sub(r'[\u200B-\u200D\uFEFF]', '', text)
-    text = re.sub(r'[\x00-\x1f\x7f-\x9f]', '', text)
+    # Remove control chars except newlines (\x0A, \x0D) and tabs (\x09)
+    text = re.sub(r'[\x00-\x08\x0B\x0C\x0E-\x1f\x7f-\x9f]', '', text)
 
     # Collapse excessive whitespace
     text = re.sub(r'\n+', '\n', text)
@@ -38,10 +40,31 @@ def clean_text(raw_text: str) -> str:
     text = text.replace('•', '\n-')
     text = re.sub(r'\so\s', '\n-', text)
 
-    # Add \n before headings
+        # Improved heading detection - more aggressive approach
     for heading in headings:
-        pattern = rf"(?<!\n)\b({heading})\b(?!\n)"
-        text = re.sub(pattern, r"\n\1\n", text, flags=re.IGNORECASE)
+        # Look for common heading formats with stronger pattern matching
+        patterns = [
+            # ALL CAPS with or without colon
+            re.compile(fr'\b{re.escape(heading.upper())}\b:?', re.MULTILINE),
+            # Title Case with or without colon
+            # re.compile(fr'\b{re.escape(heading.title())}\b:?', re.MULTILINE),
+            # Bold formatting often indicated by repeated characters
+            re.compile(fr'\b{re.escape(heading.upper())}\s*\n', re.MULTILINE),
+        ]
+        
+        # Apply each pattern
+        for pattern in patterns:
+            # Add a debugging print to see what's being matched
+            matches = pattern.findall(text)
+            # if matches:
+            #     print(f"Found heading '{heading}' as: {matches}")
+            
+            # Replace with newlines before and after
+            text = pattern.sub(f'\n\n\\g<0>\n', text)
+    
+    # Ensure clean separation between sections
+    text = re.sub(r'\n{3,}', '\n\n', text)  # No more than double newlines
+
 
     # Optional: strip non-ASCII if needed
     text = re.sub(r'[^\x00-\x7F]+', ' ', text)
@@ -63,6 +86,5 @@ def load_pdf(path: str) -> str:
 
 if __name__ == '__main__':
     path = Path(os.getcwd())
-    print(str(path))
-    path = path / 'data' / 'hardiks_old_resume.pdf'
+    path = path / 'data' / 'areebs_resume.pdf'
     print(load_pdf(path))

@@ -1,6 +1,9 @@
 .venv/
 data/
 timeline/
-.env
+*.env
 *.pyc
-app/resume_parser/__pycache__
+app/resume_parser/__pycache__/
+app/rag_pipeline/__pycache__/
+llama.cpp/
+llm_backend/

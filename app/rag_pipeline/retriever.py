@@ -1,5 +1,5 @@
 from sentence_transformers import SentenceTransformer
-from vector_db import get_jobs_collection
+from rag_pipeline.vector_db import get_jobs_collection
 
 class JobRetriever:
     def __init__(self, model_name="all-MiniLM-L6-v2", top_k=5):

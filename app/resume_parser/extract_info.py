@@ -1,33 +1,16 @@
-import spacy
-from parse_pdf import load_pdf
+from resume_parser.parse_pdf import load_pdf
+from resume_parser.llm_prompt import system_prompt_content, user_prompt_template
 from pathlib import Path
 import os
 import requests
 from dotenv import load_dotenv
 import json
-from llm_prompt import system_prompt_content, user_prompt_template
 
 
 load_dotenv()
 
 LLAMA_CPP_URL = os.getenv('LLAMA_CPP_URL')
 MODEL_NAME = os.getenv('MODEL_NAME')
-
-
-# def extract_name(text: str) -> str:
-#     """
-#     Extracts name from text using NER via spaCy.
-#     """
-#     nlp = spacy.load('en_core_web_sm')
-#     doc = nlp(text)
-#     name = None
-    
-#     for ent in doc.ents:
-#         if ent.label_ == "PERSON":
-#             name = ent.text
-#             break
-    
-#     return name
 
 def extract_education_skills_name_llama_cpp(resume_text: str):
     """
@@ -95,7 +78,6 @@ def extract_education_skills_name_llama_cpp(resume_text: str):
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
         return None
-
 
 if __name__ == "__main__":
 

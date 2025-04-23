@@ -1,9 +1,11 @@
 from sentence_transformers import SentenceTransformer
 from rag_pipeline.vector_db import get_jobs_collection
+import torch
 
 class JobRetriever:
     def __init__(self, model_name="all-MiniLM-L6-v2", top_k=5):
-        self.model = SentenceTransformer(model_name)
+        device = 'cuda' if torch.cuda.is_available() else 'cpu'
+        self.model = SentenceTransformer(model_name, device=device)
         self.collection = get_jobs_collection()
         self.top_k = top_k
 

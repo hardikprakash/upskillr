@@ -81,7 +81,7 @@ def extract_education_skills_name_llama_cpp(resume_text: str):
 
 if __name__ == "__main__":
 
-    pdf_file_paths = [load_pdf(Path(os.getcwd()) / 'data' / 'areebs_resume.pdf'), load_pdf(Path(os.getcwd()) / 'data' /'siddharthas_resume.pdf')]
+    pdf_file_paths = [load_pdf(Path(os.getcwd()) / 'data' / 'areebs_resume.pdf'), load_pdf(Path(os.getcwd()) / 'data' /'hardiks_resume.pdf')]
 
     for resume_text in pdf_file_paths:
         print("\n--- Calling Llama.cpp API ---")

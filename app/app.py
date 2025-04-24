@@ -1,8 +1,9 @@
 from resume_parser.parse_pdf import load_pdf
-from resume_parser.extract_info import extract_education_skills_name_llama_cpp
+from resume_parser.extract_info import extract_education_skills_name_llama_cpp, recommend_skills_llama_cpp
 from rag_pipeline.retriever import JobRetriever
 from pathlib import Path
 import os
+from resume_parser.llm_prompt import skills_gap_prompt_template, JOB_QUERY_PROMPT_TEMPLATE
 
 DEFAULT_PDF_PATH = Path(os.getcwd()) / 'data' /'areebs_resume.pdf'
 
@@ -31,15 +32,7 @@ def main(pdf_path: str= DEFAULT_PDF_PATH):
     if data_dict and data_dict.get('skills') and len(data_dict['skills']) > 0:
         USER_SKILL_LIST = data_dict['skills']
 
-    # print(USER_NAME, USER_ROLE, USER_EDUCATION_LIST, USER_EXPERIENCE_LIST, USER_SKILL_LIST)
 
-    JOB_QUERY_PROMPT_TEMPLATE = """
-Find job postings suitable for a candidate with the following qualifications:
-Target Job Role: {job_role}
-Key Skills: {skills}
-Educational Background: {education}
-Experience: {experience}
-"""
 
     skills_str = ", ".join(USER_SKILL_LIST) if USER_SKILL_LIST else "Not specified"
     education_str = " | ".join(USER_EDUCATION_LIST) if USER_EDUCATION_LIST else "Not specified"
@@ -53,14 +46,23 @@ Experience: {experience}
         experience=experience_str
     )
 
-    # print(query_prompt)
-
-    retriever = JobRetriever()
+    retriever = JobRetriever(top_k=2)
     results = retriever.retrieve_similar_jobs(query_prompt)
 
-    for i, doc in enumerate(results['documents'][0]):
-        print(f"\nResult {i+1}")
-        print("Text:", doc)
-        print("Metadata:", results['metadatas'][0][i])
+    RAG_RETRIEVED_JOB_DATA = []
+    for doc in results['documents'][0]:
+        RAG_RETRIEVED_JOB_DATA.append(doc)
+
+    recommended_skills_json = recommend_skills_llama_cpp(
+        USER_SKILL_LIST,
+        USER_EDUCATION_LIST,
+        USER_EXPERIENCE_LIST,
+        RAG_RETRIEVED_JOB_DATA
+    )
+
+    print(f"Hey {USER_NAME}, you should learn these skills:")
+    for i in recommended_skills_json['recommended_skills']:
+        print(i)
+
 if __name__ == '__main__':
     main()

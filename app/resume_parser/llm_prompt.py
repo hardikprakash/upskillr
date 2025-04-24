@@ -135,3 +135,34 @@ Output:
 }
 
 """
+
+skills_gap_prompt_template = """
+You are an expert career assistant. Given the following information, analyze the user's background and the requirements of relevant job postings, then suggest a list of new skills the user should learn to become a stronger candidate.
+
+User's Current Skills:
+{user_skills}
+
+User's Education:
+{user_education}
+
+User's Experience:
+{user_experience}
+
+Relevant Job Postings (requirements, responsibilities, desired skills):
+{job_postings}
+
+Return your answer ONLY as a JSON object in this format:
+{{
+  "recommended_skills": ["skill1", "skill2", ...]
+}}
+
+Do not include any explanation or text outside the JSON.
+"""
+
+JOB_QUERY_PROMPT_TEMPLATE = """
+We are looking for candidates with the following qualifications:
+Target Job Role: {job_role}
+Key Skills: {skills}
+Educational Background: {education}
+Experience: {experience}
+"""

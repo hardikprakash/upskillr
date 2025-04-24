@@ -6,7 +6,7 @@ import chromadb
 from chromadb.config import Settings
 
 def get_store_path():
-    return str((Path(os.getcwd()).parent / 'data') if os.getcwd().endswith('app') else (Path(os.getcwd()) / 'data'))
+    return str((Path(os.getcwd()).parent / 'database') if os.getcwd().endswith('app') else (Path(os.getcwd()) / 'database'))
 
 def embed_jobs():
 
@@ -24,7 +24,9 @@ def embed_jobs():
         batch = df.iloc[i:i+batch_size]
         
         # Combine job title and category with text
-        texts = (batch['job_title'] + " | " + batch['category'] + ": " + batch['text']).to_list()
+        texts = ("We are looking for candidates with the following qualifications: Target Job Role:" + batch['job_title'] + "(In the " + batch['category'] + "field)." + "Here are the job listing details:" + batch['text']).to_list()
+
+
 
         ids = batch['id'].astype(str).to_list()
         metadatas = batch[["job_id", "category", "job_title", "chunk_index"]].to_dict(orient="records")
@@ -62,6 +64,6 @@ def test_embedding():
     print("✅ Test passed: Embedding and retrieval working correctly.")
 
 if __name__ == '__main__':
-    # chroma_client = chromadb.PersistentClient(path=get_store_path, settings=Settings(allow_reset=True))
-    # embed_jobs()
-    test_embedding()
+    chroma_client = chromadb.PersistentClient(path=get_store_path())
+    embed_jobs()
+    # test_embedding()

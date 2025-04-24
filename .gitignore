@@ -7,3 +7,5 @@ app/resume_parser/__pycache__/
 app/rag_pipeline/__pycache__/
 llama.cpp/
 llm_backend/
+app/__pycache__
+database/b702382c-8b18-41f4-b916-007290ea60e5/

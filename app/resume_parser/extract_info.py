@@ -18,13 +18,20 @@ load_dotenv()
 
 LLAMA_CPP_URL = os.getenv('LLAMA_CPP_URL')
 MODEL_NAME = os.getenv('MODEL_NAME')
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')  # Optional API key
+
+def build_headers():
+    headers = {"Content-Type": "application/json"}
+    if OPENAI_API_KEY:
+        headers["Authorization"] = f"Bearer {OPENAI_API_KEY}"
+    return headers
 
 def extract_education_skills_name_llama_cpp(resume_text: str):
     """
     Extracts education, experience, and skills from resume text using
     a llama.cpp server with the OpenAI API format.
     """
-    headers = {"Content-Type": "application/json"}
+    headers = build_headers()
 
     user_message_content = user_prompt_template.format(resume_text=resume_text)
 
@@ -91,7 +98,7 @@ def recommend_skills_llama_cpp(user_skills, user_education, user_experience, job
     Given user's skills, education, experience, and relevant job postings,
     calls the LLM to recommend new skills as a JSON list.
     """
-    headers = {"Content-Type": "application/json"}
+    headers = build_headers()
 
     # Prepare strings for prompt
     skills_str = ", ".join(user_skills) if user_skills else "Not specified"

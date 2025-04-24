@@ -1,20 +1,11 @@
+import torch
+torch.classes.__path__ = []
 import streamlit as st
-import sys
 import os
 from pathlib import Path
 import tempfile
 import math
 
-# Handle PyTorch modules properly for Streamlit
-if hasattr(st, "_is_running_with_streamlit"):
-    # Import torch first before modifying sys.modules
-    import torch
-    # Nullify problematic torch modules
-    sys.modules["torch._C"] = None
-    sys.modules["torch.classes"] = None
-    sys.modules["torch._classes"] = None
-
-# Now import the rest of your modules
 from resume_parser.parse_pdf import load_pdf
 from resume_parser.extract_info import extract_education_skills_name_llama_cpp, recommend_skills_llama_cpp
 from rag_pipeline.retriever import JobRetriever
@@ -111,7 +102,6 @@ def process_resume(pdf_path):
         experience=experience_str
     )
 
-    # Retrieving similar jobs (hidden from display but still used for recommendations)
     with st.spinner("Finding relevant job matches..."):
         retriever = JobRetriever(top_k=2)
         results = retriever.retrieve_similar_jobs(query_prompt)
@@ -120,7 +110,6 @@ def process_resume(pdf_path):
     for doc in results['documents'][0]:
         RAG_RETRIEVED_JOB_DATA.append(doc)
 
-    # Generating skill recommendations
     with st.spinner("Generating skill recommendations..."):
         recommended_skills_json = recommend_skills_llama_cpp(
             USER_SKILL_LIST,

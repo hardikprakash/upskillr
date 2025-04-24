@@ -1,0 +1,16 @@
+[server]
+enableXsrfProtection = false
+enableCORS = false
+
+[browser]
+gatherUsageStats = false
+
+[runner]
+# Disable watching of specific modules that are causing problems
+moduleWatcherIgnoreModules = ["torch", "torch._classes"]
+
+[theme]
+primaryColor = "#FF4B4B"
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F0F2F6"
+textColor = "#262730"

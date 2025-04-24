@@ -73,7 +73,7 @@ def extract_education_skills_name_llama_cpp(resume_text: str, API_KEY: str, MODE
             return None
 
     except requests.exceptions.RequestException as e:
-        print(f"Error making request to {LLAMA_CPP_URL}: {e}")
+        print(f"Error making request to {API_URL}: {e}")
         return None
     except Exception as e:
         print(f"An unexpected error occurred: {e}")

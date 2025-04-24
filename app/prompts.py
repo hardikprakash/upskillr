@@ -1,4 +1,7 @@
-unformatted_data_extraction_prompt = """
+user_resume_template = "Now extract the information from this resume:\n\n{resume_text}"
+
+
+system_prompt = """
 You are an expert assistant that extracts structured information from resumes. Your task is to extract the following fields:
 
 1.  **name**: The full name of the individual.
@@ -128,8 +131,38 @@ Output:
   "job_role" : null,
   "education": [],
   "experience": [],
-  "skills": ["Python", "SQL", "Git", "Basic C#", "Communication", "Teamwork", "Problem Solving"]
+  "skills": ["Python", "SQL", "Git", "C#"]
 }
 
 """
 
+recommended_skills_prompt_template = """
+You are an expert career assistant. Given the following information, analyze the user's background and the requirements of relevant job postings, then suggest a list of 9 most important and relevant new skills the user should learn to become a stronger candidate. Don't suggest over 9 skills.
+
+User's Current Skills:
+{user_skills}
+
+User's Education:
+{user_education}
+
+User's Experience:
+{user_experience}
+
+Relevant Job Postings (requirements, responsibilities, desired skills):
+{job_postings}
+
+Return your answer ONLY as a JSON object in this format:
+{{
+  "recommended_skills": ["skill1", "skill2", ...]
+}}
+
+Do not include any explanation or text outside the JSON.
+"""
+
+job_query_prompt_template = """
+We are looking for candidates with the following qualifications:
+Target Job Role: {job_role}
+Key Skills: {skills}
+Educational Background: {education}
+Experience: {experience}
+"""

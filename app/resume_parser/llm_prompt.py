@@ -137,7 +137,7 @@ Output:
 """
 
 skills_gap_prompt_template = """
-You are an expert career assistant. Given the following information, analyze the user's background and the requirements of relevant job postings, then suggest a list of new skills the user should learn to become a stronger candidate.
+You are an expert career assistant. Given the following information, analyze the user's background and the requirements of relevant job postings, then suggest a list of 9 most important and relevant new skills the user should learn to become a stronger candidate. Don't suggest over 9 skills.
 
 User's Current Skills:
 {user_skills}

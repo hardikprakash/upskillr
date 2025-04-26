@@ -8,7 +8,7 @@ def build_headers(API_KEY):
         headers["Authorization"] = f"Bearer {API_KEY}"
     return headers
 
-def recommend_skills_llama_cpp(user_skills: list, user_education: list, user_experience:list, job_postings:list, API_KEY: str, MODEL_NAME:str, API_URL: str):
+def recommend_skills(user_skills: list, user_education: list, user_experience:list, job_postings:list, API_KEY: str, MODEL_NAME:str, API_URL: str):
     """
     Given user's skills, education, experience, and relevant job postings,
     calls the LLM to recommend new skills as a JSON list.

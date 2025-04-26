@@ -6,3 +6,4 @@ llm-server/
 app/__pycache__
 app/rag_components/__pycache__
 app/resume_parser/__pycache__
+database/b702382c-8b18-41f4-b916-007290ea60e5/

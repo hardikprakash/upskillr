@@ -1,5 +1,6 @@
 from sentence_transformers import SentenceTransformer
 from rag_components.init_db import get_jobs_collection
+from prompts import job_query_prompt_template
 import torch
 
 class JobRetriever:
@@ -12,20 +13,19 @@ class JobRetriever:
     def embed_query(self, query: str):
         return self.model.encode([query])[0]
 
-    def retrieve_similar_jobs(self, query: str):
-        embedding = self.embed_query(query)
+    def retrieve_similar_jobs(self, job_role_str: str, skills_str: str, education_str :str, experience_str: str):
+        
+        job_query_prompt = job_query_prompt_template.format(
+            job_role=job_role_str,
+            skills=skills_str,
+            education=education_str,
+            experience=experience_str
+        )
+        
+        embedding = self.embed_query(job_query_prompt)
+
         results = self.collection.query(
             query_embeddings=[embedding],
             n_results=self.top_k
         )
         return results
-    
-if __name__ == "__main__":
-    retriever = JobRetriever()
-    query = "Skills required by the IT candidate are"
-    results = retriever.retrieve_similar_jobs(query)
-
-    for i, doc in enumerate(results['documents'][0]):
-        print(f"\nResult {i+1}")
-        print("Text:", doc)
-        print("Metadata:", results['metadatas'][0][i])

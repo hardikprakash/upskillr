@@ -1,8 +1,5 @@
 
-from app.resume_parser.pdf_parsing import load_pdf
-from app.prompts import user_resume_template, system_prompt, recommended_skills_prompt_template
-from pathlib import Path
-# import os
+from prompts import user_resume_template, system_prompt
 import requests
 import json
 
@@ -12,7 +9,7 @@ def build_headers(API_KEY):
         headers["Authorization"] = f"Bearer {API_KEY}"
     return headers
 
-def extract_education_skills_name_llama_cpp(resume_text: str, API_KEY: str, MODEL_NAME:str, API_URL: str):
+def extract_education_skills_name(resume_text: str, API_KEY: str, MODEL_NAME:str, API_URL: str):
     """
     Extracts education, experience, and skills from resume text using
     a llama.cpp server with the OpenAI API format.

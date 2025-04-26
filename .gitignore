@@ -1,4 +1,8 @@
 .env
 .venv/
 data/
-llm-backend/
+llm-server/
+*.pyc
+app/__pycache__
+app/rag_components/__pycache__
+app/resume_parser/__pycache__

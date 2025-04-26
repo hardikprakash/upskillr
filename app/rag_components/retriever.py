@@ -1,5 +1,5 @@
 from sentence_transformers import SentenceTransformer
-from app.rag_components.init_db import get_jobs_collection
+from rag_components.init_db import get_jobs_collection
 import torch
 
 class JobRetriever:

@@ -1,6 +1,6 @@
 import requests
 import json
-from app.prompts import recommend_skills_prompt_template
+from prompts import recommend_skills_prompt_template
 
 def build_headers(API_KEY):
     headers = {"Content-Type": "application/json"}

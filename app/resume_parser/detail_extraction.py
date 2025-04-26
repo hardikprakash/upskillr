@@ -30,7 +30,7 @@ def extract_education_skills_name(resume_text: str, API_KEY: str, MODEL_NAME:str
     }
 
     try:
-        response = requests.post(API_URL, headers=headers, json=payload, timeout=120)
+        response = requests.post(API_URL, headers=headers, json=payload, timeout=210)
         response.raise_for_status()
 
         response_json = response.json()

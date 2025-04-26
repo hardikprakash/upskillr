@@ -39,7 +39,7 @@ def recommend_skills(user_skills: list, user_education: list, user_experience:li
     }
 
     try:
-        response = requests.post(API_URL, headers=headers, json=payload, timeout=60)
+        response = requests.post(API_URL, headers=headers, json=payload, timeout=210)
         response.raise_for_status()
         response_json = response.json()
 

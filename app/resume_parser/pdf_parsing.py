@@ -1,8 +1,6 @@
 import pymupdf
-import os 
 import re
 import unicodedata
-from pathlib import Path
 
 
 def clean_text(raw_text: str) -> str:

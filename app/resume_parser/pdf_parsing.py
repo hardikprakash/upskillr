@@ -77,8 +77,3 @@ def load_pdf(path: str) -> str:
     cleaned = clean_text(text)
 
     return cleaned
-
-if __name__ == '__main__':
-    path = Path(os.getcwd())
-    path = path / 'data' / 'areebs_resume.pdf'
-    print(load_pdf(path))

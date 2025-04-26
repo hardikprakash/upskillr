@@ -83,7 +83,7 @@ upskillr/
 └── data/                               # Directory for resume PDFs
 ```
 
-## 🧠 How It Works
+## How It Works
 
 1. **Resume Parsing Pipeline**:
    - Converts PDF to text using PyMuPDF
@@ -100,7 +100,7 @@ upskillr/
    - Identifies skill gaps based on education and experience
    - Generates personalized skill recommendations through LLM prompting
 
-## 📚 API Reference
+## API Reference
 
 The project uses a local LLM server or compatible API with the following endpoints:
 

@@ -49,7 +49,7 @@ MODEL_NAME="Dolphin3.0-Llama3.1-8B-GGUF"
 ```
 Note: The API_KEY variable is optional and can be added if your LLM service requires authentication.
 
-## 🚦 Usage
+## Usage
 
 1. Place your resume PDF in the `data` folder
 
@@ -64,7 +64,7 @@ python app.py
    - Match your profile against relevant job postings
    - Generate personalized skill recommendations
 
-## 🗄️ Project Structure
+## Project Structure
 
 ```
 upskillr/

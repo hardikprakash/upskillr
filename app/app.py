@@ -208,7 +208,7 @@ def main():
 
     st.set_page_config(page_title="UpskillR", page_icon="📝", layout="wide")
     
-    st.title("UpskillR - Resume Analyzer")
+    st.title("UpskillR")
     st.write("Upload your resume and get personalized skill recommendations")
     
     uploaded_file = st.file_uploader("Upload your resume (PDF format)", type=["pdf"])

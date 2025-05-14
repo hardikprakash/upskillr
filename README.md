@@ -2,7 +2,7 @@
 
 Upskillr is an AI-powered career development app that helps users identify skill gaps and receive personalized recommendations by analyzing their resumes against current job market demands.
 
-**Hosted at**: https://upskillr/streamlit.app
+**Hosted at**: https://upskillr.streamlit.app
 
 ## Features
 

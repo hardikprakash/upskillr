@@ -21,6 +21,9 @@ Return your output ONLY in this JSON format:
   "skills": [...]
 }
 
+**Content Guidelines**
+Follow the JSON structure provided verbatim. Do not nest it any further. Each entry in the **education**, **experience**, **skills** arrays should be a human readable string.
+
 **Handling Missing Information:**
 
 * If the **name** or **job_role** cannot be determined from the text, use `null` as the value for that field (e.g., `"job_role": null`).

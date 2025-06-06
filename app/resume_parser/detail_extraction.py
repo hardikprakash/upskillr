@@ -25,7 +25,7 @@ def extract_education_skills_name(resume_text: str, API_KEY: str, MODEL_NAME:str
             {"role": "user", "content": user_resume_prompt}
         ],
         "temperature": 0.2,  
-        "max_tokens": 2048,
+        # "max_tokens": 2048,
         "stream": False
     }
 
@@ -35,9 +35,9 @@ def extract_education_skills_name(resume_text: str, API_KEY: str, MODEL_NAME:str
 
         response_json = response.json()
 
-        if "choices" in response_json and len(response_json["choices"]) > 0:
+        if 'message' in response_json:
             
-            message = response_json["choices"][0].get("message", {})
+            message = response_json.get('message', {})
             result_string = message.get("content", "").strip()
 
             if result_string.startswith("```json"):

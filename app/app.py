@@ -11,8 +11,8 @@ import math
 import os
 import time
 from dotenv import load_dotenv
-from azure.identity import ClientSecretCredential
-from azure.mgmt.compute import ComputeManagementClient
+# from azure.identity import ClientSecretCredential
+# from azure.mgmt.compute import ComputeManagementClient
 
 from resume_parser.pdf_parsing import load_pdf
 from resume_parser.detail_extraction import extract_education_skills_name
@@ -71,21 +71,8 @@ def display_countdown_timer(seconds):
     status_text.empty()
     progress_bar.empty()
 
-def process_resume(pdf_path, API_URL, API_KEY, MODEL_NAME, subscription_id, resource_group, vm_name, tenant_id, client_id, client_secret):
+def process_resume(pdf_path, API_URL, API_KEY, MODEL_NAME):
     st.info("Processing your resume...")
-    
-    # Start Azure VM and display countdown timer
-    compute_client = start_azure_vm(subscription_id, resource_group, vm_name, tenant_id, client_id, client_secret)
-    if compute_client:
-        with st.expander("Azure VM Startup", expanded=True):
-            st.info("The LLM server needs to start up before processing can begin. This will take 120 seconds.")
-            display_countdown_timer(120)
-    else:
-        st.error("Unable to start the Azure VM. Please try again later.")
-        return False
-    
-    # Notice about processing time
-    st.warning("⏳ Note: Extracting information and generating skill recommendations may take 4-5 minutes to complete due to Azure compute limitations. Please be patient.")
     
     with st.spinner("Loading Resume..."):
         resume_text = load_pdf(pdf_path)
@@ -195,16 +182,6 @@ def main():
     API_URL = os.getenv("API_URL", None)
     API_KEY = os.getenv("API_KEY", None)
     MODEL_NAME = os.getenv("MODEL_NAME", None)
-    
-    # Azure VM configuration
-    AZURE_SUBSCRIPTION_ID = os.getenv("AZURE_SUBSCRIPTION_ID", None)
-    AZURE_RESOURCE_GROUP = os.getenv("AZURE_RESOURCE_GROUP", None)
-    AZURE_VM_NAME = os.getenv("AZURE_VM_NAME", None)
-    
-    # Azure service principal credentials
-    AZURE_TENANT_ID = os.getenv("AZURE_TENANT_ID", None)
-    AZURE_CLIENT_ID = os.getenv("AZURE_CLIENT_ID", None)
-    AZURE_CLIENT_SECRET = os.getenv("AZURE_CLIENT_SECRET", None)
 
     st.set_page_config(page_title="UpskillR", page_icon="📝", layout="wide")
     
@@ -225,12 +202,6 @@ def main():
             API_URL=API_URL, 
             API_KEY=API_KEY, 
             MODEL_NAME=MODEL_NAME,
-            subscription_id=AZURE_SUBSCRIPTION_ID,
-            resource_group=AZURE_RESOURCE_GROUP,
-            vm_name=AZURE_VM_NAME,
-            tenant_id=AZURE_TENANT_ID,
-            client_id=AZURE_CLIENT_ID,
-            client_secret=AZURE_CLIENT_SECRET
         )
         
         # Clean up the temporary file

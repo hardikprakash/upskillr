@@ -34,7 +34,7 @@ def recommend_skills(user_skills: list, user_education: list, user_experience:li
             {"role": "user", "content": recommend_skills_prompt}
         ],
         "temperature": 0.2,
-        "max_tokens": 512,
+        # "max_tokens": 512,
         "stream": False
     }
 
@@ -43,8 +43,9 @@ def recommend_skills(user_skills: list, user_education: list, user_experience:li
         response.raise_for_status()
         response_json = response.json()
 
-        if "choices" in response_json and len(response_json["choices"]) > 0:
-            message = response_json["choices"][0].get("message", {})
+        if 'message' in response_json:
+            
+            message = response_json.get('message', {})
             result_string = message.get("content", "").strip()
 
             if result_string.startswith("```json"):

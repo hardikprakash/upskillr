@@ -36,25 +36,6 @@ def create_grid_layout(items, cols=3):
     
     return grid
 
-def start_azure_vm(subscription_id, resource_group, vm_name, tenant_id, client_id, client_secret):
-    """Start the Azure VM and return the compute client"""
-    try:
-        # Use service principal authentication
-        credential = ClientSecretCredential(
-            tenant_id=tenant_id,
-            client_id=client_id,
-            client_secret=client_secret
-        )
-        compute_client = ComputeManagementClient(credential, subscription_id)
-        
-        st.info(f"Starting the Azure VM: {vm_name}...")
-        compute_client.virtual_machines.begin_start(resource_group, vm_name)
-        
-        return compute_client
-    except Exception as e:
-        st.error(f"Failed to start Azure VM: {str(e)}")
-        return None
-
 def display_countdown_timer(seconds):
     """Display a countdown timer in the Streamlit app"""
     progress_bar = st.progress(0)

@@ -22,7 +22,8 @@ Return your output ONLY in this JSON format:
 }
 
 **Content Guidelines**
-Follow the JSON structure provided verbatim. Do not nest it any further. Each entry in the **education**, **experience**, **skills** arrays should be a human readable string.
+Follow the JSON structure provided verbatim. Do not nest it any further. Each entry in the **education**, **experience** arrays should be a human readable string.
+Each entry in the **skills** array should be a skill. Do not nest or categorise the skills. The array should contain only the names of the skills, and they shouldn't be human readable sentences.
 
 **Handling Missing Information:**
 

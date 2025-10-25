@@ -9,3 +9,4 @@ app/resume_parser/__pycache__
 database/*
 !database/chroma.slite3
 app/test.py
+*.md

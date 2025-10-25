@@ -14,10 +14,11 @@ Upskillr is an AI-powered career development app that helps users identify skill
 
 ## Prerequisites
 
+- Python 3.8+
+- OpenRouter API Key (get from https://openrouter.ai/keys)
 - PyMuPDF
 - SentenceTransformers
 - ChromaDB
-- Llama.cpp server or compatible LLM API
 
 ## Installation
 
@@ -41,24 +42,34 @@ pip install -r requirements.txt
 4. Configure environment variables:
 ```bash
 cp .env.example .env
-# Edit the .env file with your configurations
+# Edit the .env file with your OpenRouter API key and configurations
 ```
 
 The .env file should look like this:
 ```
-API_URL="http://localhost:8080/v1/chat/completions"
-MODEL_NAME="Dolphin3.0-Llama3.1-8B-GGUF"
+OPENROUTER_API_KEY="your_openrouter_api_key_here"
+API_URL="https://openrouter.ai/api/v1/chat/completions"
+MODEL_NAME="openai/gpt-oss-20b:free"
+FALLBACK_MODEL_NAME="deepseek/deepseek-r1t-chimera:free"
+APP_URL="https://github.com/hardikprakash/upskillr"
+APP_NAME="Upskillr"
 ```
-Note: The API_KEY variable is optional and can be added if your LLM service requires authentication.
+
+## Getting Your OpenRouter API Key
+
+1. Visit https://openrouter.ai/
+2. Sign up for a free account
+3. Navigate to https://openrouter.ai/keys
+4. Create a new API key
+5. Copy the key and add it to your `.env` file
 
 ## Usage
 
-1. Place your resume PDF in the `data` folder
+1. Ensure you have your OpenRouter API key configured in `.env`
 
-2. Run the main application:
+2. Run the Streamlit application:
 ```bash
-cd app
-python app.py
+streamlit run app/app.py
 ```
 
 3. The application will:
@@ -100,10 +111,15 @@ upskillr/
 3. **Skill Recommendation Engine**:
    - Analyzes user skills against job requirements
    - Identifies skill gaps based on education and experience
-   - Generates personalized skill recommendations through LLM prompting
+   - Generates personalized skill recommendations through OpenRouter LLMs
 
-## API Reference
+## Technology Stack
 
-The project uses a local LLM server or compatible API with the following endpoints:
-
-- POST /v1/chat/completions - For extracting resume information and generating recommendations
+- **Frontend**: Streamlit
+- **LLM Provider**: OpenRouter API
+  - Primary Model: `openai/gpt-oss-20b:free`
+  - Fallback Model: `deepseek/deepseek-r1t-chimera:free`
+- **Vector Database**: ChromaDB
+- **Embeddings**: SentenceTransformers (all-MiniLM-L6-v2)
+- **PDF Processing**: PyMuPDF
+- **HTTP Client**: Requests

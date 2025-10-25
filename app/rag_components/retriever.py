@@ -1,3 +1,8 @@
+import sys
+from pathlib import Path
+# Add parent directory to path to import prompts
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
 from sentence_transformers import SentenceTransformer
 from rag_components.init_db import get_jobs_collection
 from prompts import job_query_prompt_template
